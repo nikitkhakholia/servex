@@ -1,0 +1,22 @@
+{
+  "name": "webserver-80",
+  "version": "1.0.0",
+  "description": "To serve different websites on a single port",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nikitkhakholia/webserver.git"
+  },
+  "author": "NikitKhakholia",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nikitkhakholia/webserver/issues"
+  },
+  "homepage": "https://github.com/nikitkhakholia/webserver#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
