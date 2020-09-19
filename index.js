@@ -10,6 +10,7 @@ http
       .addListener("end", () => {
         try {
           var hostName = req.headers.host.split(":")[0];
+          console.log(req.headers.host.split(":")[0]);
           switch (hostName) {
             case `${process.env.SITE0}`:
               site0.serve(req, res);
@@ -23,3 +24,4 @@ http
       .resume();
   })
   .listen(80);
+console.log("Listening on :80");
