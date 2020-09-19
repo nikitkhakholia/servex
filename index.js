@@ -12,7 +12,8 @@ http
           var hostName = req.headers.host.split(":")[0];
           console.log(req.headers.host.split(":")[0]);
           switch (hostName) {
-            case `${process.env.SITE0}` || `www.${process.env.SITE0}`:
+            case `${process.env.SITE0}`:
+            case `www.${process.env.SITE0}`:
               site0.serve(req, res);
               break;
             default:
