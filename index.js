@@ -3,6 +3,7 @@ var static = require("node-static");
 require("dotenv").config();
 
 var site0 = new static.Server(`./site/${process.env.SITE0}`, { cache: 3600 });
+var site1 = new static.Server(`./site/${process.env.SITE1}`, { cache: 3600 });
 
 http
   .createServer((req, res) => {
@@ -15,6 +16,10 @@ http
             case `${process.env.SITE0}`:
             case `www.${process.env.SITE0}`:
               site0.serve(req, res);
+              break;
+            case `${process.env.SITE1}`:
+            case `www.${process.env.SITE1}`:
+              site1.serve(req, res);
               break;
             default:
           }
