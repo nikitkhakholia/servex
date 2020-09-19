@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/nikitkhakholia/webserver#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "dotenv": "^8.2.0",
+    "node-static": "^0.7.11"
   }
 }

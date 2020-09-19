@@ -1,11 +1,25 @@
-const express = require("express");
-const app = express();
-app.get("/", (req, res) => {
-  if (req.hostname === "localhost") {
-    console.log(req.hostname);
-    express.static("pressdesk");
-  }
-});
-app.listen(80, () => {
-  console.log(`Server is running at 80`);
-});
+const http = require("http");
+var static = require("node-static");
+require("dotenv").config();
+
+var site0 = new static.Server(`./site/${process.env.SITE0}`, { cache: 3600 });
+
+http
+  .createServer((req, res) => {
+    req
+      .addListener("end", () => {
+        try {
+          var hostName = req.headers.host.split(":")[0];
+          switch (hostName) {
+            case `${process.env.SITE0}`:
+              site0.serve(req, res);
+              break;
+            default:
+          }
+        } catch (e) {
+          console.log(e);
+        }
+      })
+      .resume();
+  })
+  .listen(80);
