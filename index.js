@@ -1,6 +1,11 @@
 const http = require("http");
+var static = require("node-static");
 var fs = require("fs");
 require("dotenv").config();
+
+var site0 = new static.Server(`./site/${process.env.SITE0}`, { cache: 3600 });
+var site1 = new static.Server(`./site/${process.env.SITE1}`, { cache: 3600 });
+var siteX = new static.Server(`./site/${process.env.SITEX}`, { cache: 3600 });
 
 http
   .createServer((req, res) => {
@@ -14,9 +19,6 @@ http
               fs.readFile(
                 __dirname + "/site/" + process.env.SITEX + "/index.html",
                 (err, data) => {
-                  console.log(
-                    __dirname + "/site/" + process.env.SITEX + "/index.html"
-                  );
                   if (err) {
                     res.writeHead(404);
                     res.end(JSON.stringify(err));
@@ -32,9 +34,6 @@ http
               fs.readFile(
                 __dirname + "/site/" + process.env.SITE0 + "/index.html",
                 (err, data) => {
-                  console.log(
-                    __dirname + "/site/" + process.env.SITE0 + "/index.html"
-                  );
                   if (err) {
                     res.writeHead(404);
                     res.end(JSON.stringify(err));
@@ -50,9 +49,6 @@ http
               fs.readFile(
                 __dirname + "/site/" + process.env.SITE1 + "/index.html",
                 (err, data) => {
-                  console.log(
-                    __dirname + "/site/" + process.env.SITEX1 + "/index.html"
-                  );
                   if (err) {
                     res.writeHead(404);
                     res.end(JSON.stringify(err));
@@ -64,8 +60,6 @@ http
               );
               break;
             default:
-              res.writeHead(404);
-              res.end("Not hosted for this site");
           }
         } catch (e) {
           console.log(e);
