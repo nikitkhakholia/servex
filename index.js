@@ -1,33 +1,45 @@
-const http = require("http");
-var static = require("node-static");
+const express = require("express");
+const path = require("path");
 require("dotenv").config();
 
-var site0 = new static.Server(`./site/${process.env.SITE0}`, { cache: 3600 });
-var site1 = new static.Server(`./site/${process.env.SITE1}`, { cache: 3600 });
+const app = express();
 
-http
-  .createServer((req, res) => {
-    req
-      .addListener("end", () => {
-        try {
-          var hostName = req.headers.host.split(":")[0];
-          console.log(req.headers.host.split(":")[0]);
-          switch (hostName) {
-            case `${process.env.SITE0}`:
-            case `www.${process.env.SITE0}`:
-              site0.serve(req, res);
-              break;
-            case `${process.env.SITE1}`:
-            case `www.${process.env.SITE1}`:
-              site1.serve(req, res);
-              break;
-            default:
-          }
-        } catch (e) {
-          console.log(e);
-        }
-      })
-      .resume();
-  })
-  .listen(80);
-console.log("Listening on :80");
+app.use((req, res, next) => {
+  console.log(req.hostname);
+  switch (req.hostname) {
+    case `${process.env.SITE0}`:
+    case `www.${process.env.SITE0}`:
+      req.url = `/site/${process.env.SITE0}` + req.url;
+      break;
+    case `${process.env.SITE1}`:
+    case `www.${process.env.SITE1}`:
+      req.url = `/site/${process.env.SITE1}` + req.url;
+      break;
+    default:
+      res.send(req.hostname + " not found");
+  }
+  next();
+}, express.static(__dirname));
+
+app.get("*", (req, res) => {
+  switch (req.hostname) {
+    case `${process.env.SITE0}`:
+    case `www.${process.env.SITE0}`:
+      res.sendFile(
+        path.resolve(__dirname, "site", process.env.SITE0, "index.html")
+      );
+      break;
+    case `${process.env.SITE1}`:
+    case `www.${process.env.SITE1}`:
+      res.sendFile(
+        path.resolve(__dirname, "site", process.env.SITE1, "index.html")
+      );
+      break;
+    default:
+      res.send(req.hostname + "not found");
+  }
+});
+
+app.listen(process.env.PORT);
+
+console.log("Server started " + process.env.PORT);
