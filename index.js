@@ -15,6 +15,10 @@ app.use((req, res, next) => {
     case `www.${process.env.SITE1}`:
       req.url = `/site/${process.env.SITE1}` + req.url;
       break;
+    case `${process.env.SITE2}`:
+    case `www.${process.env.SITE2}`:
+      req.url = `/site/${process.env.SITE2}` + req.url;
+      break;
     default:
       res.send(req.hostname + " not found");
   }
@@ -33,6 +37,12 @@ app.get("*", (req, res) => {
     case `www.${process.env.SITE1}`:
       res.sendFile(
         path.resolve(__dirname, "site", process.env.SITE1, "index.html")
+      );
+      break;
+    case `${process.env.SITE2}`:
+    case `www.${process.env.SITE2}`:
+      res.sendFile(
+        path.resolve(__dirname, "site", process.env.SITE2, "index.html")
       );
       break;
     default:
