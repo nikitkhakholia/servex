@@ -7,10 +7,10 @@ const app = express();
 
 app.use((req, res, next) => {
   if (req.hostname.startsWith("www.")) {
-    req.hostname = req.hostname.substring(4);
+    req.sitename = req.hostname.substring(4);
   }
-  console.log(req.hostname);
-  req.url = `/site/${req.hostname}` + req.url;
+  console.log(req.sitename);
+  req.url = `/site/${req.sitename}` + req.url;
 
   // switch (req.hostname) {
   //   case `${process.env.SITE0}`:
@@ -32,16 +32,14 @@ app.use((req, res, next) => {
 }, express.static(__dirname));
 
 app.get("*", (req, res) => {
-  console.log(req.hostname+"--");
+  console.log(req.sitename + "--");
 
   res.sendFile(
-    
-    path.resolve(__dirname, "site", req.hostname, "index.html"),
-    
-    (err)  =>  {
-        console.log(err);
-      }
-  
+    path.resolve(__dirname, "site", req.sitename, "index.html"),
+
+    (err) => {
+      console.log(err);
+    }
   );
   // switch (req.hostname) {
   //   case `${process.env.SITE0}`:
