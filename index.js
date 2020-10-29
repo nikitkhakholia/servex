@@ -52,16 +52,17 @@ app.get("*", (req, res) => {
       res.send(req.hostname + "not found");
   }
 });
+app.listen(80);
 
-const s = https.createServer(
-  {
-    key: fs.readFileSync(path.join(__dirname, "ssl", "key.pem")),
-    cert: fs.readFileSync(path.join(__dirname, "ssl", "cert.pem")),
-  },
-  app
-);
-s.listen(process.env.PORT, "", () => {
-  console.log("Server started " + process.env.PORT);
-});
+// const s = https.createServer(
+//   {
+//     key: fs.readFileSync(path.join(__dirname, "ssl", "key.pem")),
+//     cert: fs.readFileSync(path.join(__dirname, "ssl", "cert.pem")),
+//   },
+//   app
+// );
+// s.listen(process.env.PORT, "", () => {
+//   console.log("Server started " + process.env.PORT);
+// });
 
 
