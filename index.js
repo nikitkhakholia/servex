@@ -1,6 +1,5 @@
 const express = require("express");
 const path = require("path");
-require("dotenv").config();
 const https = require("https");
 const fs = require("fs");
 
@@ -10,7 +9,7 @@ app.use((req, res, next) => {
   if (req.hostname.startsWith("www.")) {
     req.hostname = req.hostname.substring(4);
   }
-  req.url = `/site/${process.env.SITE0}` + req.url;
+  req.url = `/site/${req.hostname}` + req.url;
 
   // switch (req.hostname) {
   //   case `${process.env.SITE0}`:
