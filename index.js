@@ -34,9 +34,17 @@ app.use((req, res, next) => {
 }, express.static(__dirname));
 
 app.get("*", (req, res) => {
-  console.log(req.hostname);
+  console.log(req.hostname+"--");
 
-  res.sendFile(path.resolve(__dirname, "site", req.hostname, "index.html"));
+  res.sendFile(
+    
+    path.resolve(__dirname, "site", req.hostname, "index.html"),
+    
+    (err)  =>  {
+        console.log(err);
+      }
+  
+  );
   // switch (req.hostname) {
   //   case `${process.env.SITE0}`:
   //   case `www.${process.env.SITE0}`:
@@ -59,7 +67,7 @@ app.get("*", (req, res) => {
   //   default:
   //     res.send(req.hostname + "not found");
   // }
-};);
+});
 app.listen(80);
 
 // const s = https.createServer(
