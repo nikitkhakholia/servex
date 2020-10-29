@@ -9,6 +9,7 @@ app.use((req, res, next) => {
   if (req.hostname.startsWith("www.")) {
     req.hostname = req.hostname.substring(4);
   }
+  console.log(req.hostname);
   req.url = `/site/${req.hostname}` + req.url;
 
   // switch (req.hostname) {
